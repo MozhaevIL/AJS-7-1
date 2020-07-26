@@ -1,1 +1,1 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/yap3bit2w6kb68et?svg=true)](https://ci.appveyor.com/project/MozhaevIL/ajs-6-2)
+[![Build status](https://ci.appveyor.com/api/projects/status/exhxi5hw2l3i9lw1?svg=true)](https://ci.appveyor.com/project/MozhaevIL/ajs-7-2)

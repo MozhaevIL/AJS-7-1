@@ -1,18 +1,13 @@
-export default function getSpecialData(character) {
-  const specialsArray = [];
-
-  function specialDestructor(object) {
-    const {
-      id, name, description = 'описание недоступно', icon,
-    } = object;
-    return {
-      id, name, description, icon,
-    };
+export default class Validator {
+  static validateUsername(username) {
+    if (!(username.match(/^[A-Za-z0-9\-_]+$/))) {
+      throw new Error('Недопустимые символы');
+    }
+    if (!(username.match(/^[A-Za-z]+.*[A-Za-z]+$/))) {
+      throw new Error('Имя должно начинаться и заканчиваться буквой');
+    }
+    if (/\d{4}/.test(username)) {
+      throw new Error('Не допускается использование более 3 цифр подряд');
+    }
   }
-
-  for (const attack of character.special) {
-    specialsArray.push(specialDestructor(attack));
-  }
-
-  return specialsArray;
 }

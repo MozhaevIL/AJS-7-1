@@ -1,43 +1,37 @@
-import getSpecialData from '../app';
+import Validator from '../app';
 
-test('function should return special attacks list with correct description', () => {
-  const input = {
-    name: 'Лучник',
-    type: 'Bowman',
-    health: 50,
-    level: 3,
-    attack: 40,
-    defence: 10,
-    special: [
-      {
-        id: 8,
-        name: 'Двойной выстрел',
-        icon: 'http://...',
-        description: 'Двойной выстрел наносит двойной урон',
-      },
-      {
-        id: 9,
-        name: 'Нокаутирующий удар',
-        icon: 'http://...',
-      },
-    ],
-  };
+test('must throw an error if username contains non-latin letters', () => {
+  expect(() => {
+    Validator.validateUsername('Игор');
+  }).toThrow('Недопустимые символы');
+});
 
-  const expected = [
-    {
-      id: 8,
-      name: 'Двойной выстрел',
-      description: 'Двойной выстрел наносит двойной урон',
-      icon: 'http://...',
-    },
-    {
-      id: 9,
-      name: 'Нокаутирующий удар',
-      description: 'описание недоступно',
-      icon: 'http://...',
-    },
-  ];
+test('must throw an error if username contains invalid symbols', () => {
+  expect(() => {
+    Validator.validateUsername('igor!igor');
+  }).toThrow('Недопустимые символы');
+});
 
-  const recieved = getSpecialData(input);
-  expect(recieved).toEqual(expected);
+test('must throw an error if username starts with non-letter', () => {
+  expect(() => {
+    Validator.validateUsername('1igor');
+  }).toThrow('Имя должно начинаться и заканчиваться буквой');
+});
+
+test('must throw an error if username ends with non-letter', () => {
+  expect(() => {
+    Validator.validateUsername('igor1');
+  }).toThrow('Имя должно начинаться и заканчиваться буквой');
+});
+
+test('must throw an error if username contains more then 3 digits in a row', () => {
+  expect(() => {
+    Validator.validateUsername('igor1234igor');
+  }).toThrow('Не допускается использование более 3 цифр подряд');
+});
+
+test('must not throw an error if username is valid', () => {
+  expect(() => {
+    Validator.validateUsername('igor-123_igor');
+  }).not.toThrow();
 });
